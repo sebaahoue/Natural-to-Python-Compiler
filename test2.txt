@@ -1,0 +1,9 @@
+x vaut 0.
+pour k allant de 1 a 10 par pas de 2.
+debut
+    pour i allant de 1 a 10 par pas de 2.
+    debut
+        x vaut x plus k.
+    fin.
+fin.
+afficher 3.

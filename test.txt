@@ -1,0 +1,2 @@
+x vaut 1.
+x vaut x plus i.
