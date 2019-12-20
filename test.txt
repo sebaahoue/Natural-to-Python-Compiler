@@ -1,2 +1,12 @@
 x vaut 1.
-x vaut x plus i.
+si k superieur a 2.
+debut
+    si k superieur a 2.
+    debut
+    x vaut 0.
+    sinon
+    x vaut 1.
+    fin.
+sinon
+x vaut 1.
+fin.

@@ -1,6 +1,16 @@
 x vaut 0.
 pour k allant de 1 a 10 par pas de 2.
 debut
-    x vaut x plus k.
+    si k superieur a 2,45.
+    debut
+        si k superieur a 2.
+        debut
+        x vaut 0.
+        sinon
+        x vaut 1.
+        fin.
+    sinon
+    x vaut 1.
+    fin.
 fin.
-afficher 3.
+afficher 'Salut je suis hyper fort'.

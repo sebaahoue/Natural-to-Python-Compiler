@@ -30,7 +30,8 @@ tokens = (
     'COMPARABLE',
     'TO',
     'STEP',
-    'IDENTIFIER'
+    'IDENTIFIER',
+    'STRING'
 ) + tuple(map(lambda s:s.upper(),reserved_words))
 
 literals = '.,'
@@ -59,11 +60,21 @@ def t_NUMBER(t):
     r'\d+([,]\d+)?'
     t.value = t.value.replace(',','.')
     try:
-        t.value = float(t.value)
+        if '.' in t.value:
+            t.value = float(t.value)
+        else:
+            t.value = int(t.value)
+
     except ValueError:
         print ("Line %d: Problem while parsing %s!" % (t.lineno,t.value))
         t.value = 0
     return t
+
+def t_STRING(t):
+    r'\'(.*?)\''
+    t.value = t.value.replace('\'','')
+    return t
+
 
 def t_IDENTIFIER(t):
 	r'[A-Za-z_]\w*'

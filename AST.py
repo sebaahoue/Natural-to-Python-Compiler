@@ -135,6 +135,18 @@ class RangeNode(Node):
 
 class IfNode(Node):
     type = 'if'
+
+class BoolNode(Node):
+    def __init__(self, cond, children):
+        Node.__init__(self,children)
+        self.cond = cond
+        try:
+            self.nbargs = len(children)
+        except AttributeError:
+            self.nbargs = 1
+        
+    def __repr__(self):
+        return "%s (%s)" % (self.cond, self.nbargs)
     
 class EntryNode(Node):
     type = 'ENTRY'

@@ -20,12 +20,16 @@ def p_statement(p):
     p[0] = p[1]
 
 def p_statement_print(p):
-    ''' statement : AFFICHER expression '''
+    ''' statement : AFFICHER expression'''
     p[0] = AST.PrintNode(p[2])
 
 def p_structure_for(p):
-    ''' structure : POUR IDENTIFIER TO loop DEBUT programme FIN'''
-    p[0] = AST.ForNode([p[4],p[6]])
+    ''' structure : POUR iterateur TO loop DEBUT programme FIN'''
+    p[0] = AST.ForNode([p[2],p[4],p[6]])
+
+def p_iterateur(p):
+    ''' iterateur : IDENTIFIER '''
+    p[0] = AST.TokenNode(p[1])
 
 def p_loop(p):
     ''' loop : range STEP expression '''
@@ -36,13 +40,17 @@ def p_range(p):
     p[0] = AST.RangeNode([p[1],p[3]])
 
 def p_structure_if(p):
-    ''' structure : SI COMPARABLE DEBUT programme SINON programme FIN '''
+    ''' structure : SI boolean DEBUT programme SINON programme FIN '''
     p[0]=AST.IfNode([p[2],p[4],p[6]])
 
+def p_boolean(p):
+    ''' boolean : expression COMPARABLE expression '''
+    p[0]=AST.BoolNode(p[2],[p[1],p[3]])
 
 def p_expression_num_or_var(p):
     '''expression : NUMBER
-        | IDENTIFIER '''
+        | IDENTIFIER
+        | STRING '''
     p[0] = AST.TokenNode(p[1])
 
 def p_expression_op(p):
