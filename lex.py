@@ -1,27 +1,30 @@
 import ply.lex as lex
 
+
 reserved_words = (
-    'egal',
     'a',
     'vaut',
-    'plus',
-    'moins',
-    'fois',
-    'divise',
-    'par',
     'pour',
-    'allant',
-    'de',
-    'pas',
     'afficher',
     'si',
-    'inferieur',
-    'superieur',
-    'alors',
     'sinon',
     'debut',
     'fin'
 )
+
+extended_reserved_words = (
+    'plus',
+    'moins',
+    'divise',
+    'par',
+    'fois',
+    'allant',
+    'de',
+    'pas',
+    'inferieur',
+    'superieur',
+) + reserved_words
+
 
 tokens = (
     'NUMBER',
@@ -73,14 +76,17 @@ def t_NUMBER(t):
 def t_STRING(t):
     r'\'(.*?)\''
     t.value = t.value.replace('\'','')
+
+    #print(t)
     return t
 
 
 def t_IDENTIFIER(t):
-	r'[A-Za-z_]\w*'
-	if t.value in reserved_words:
-		t.type = t.value.upper()
-	return t
+    r'[A-Za-z_]\w*'
+    if t.value in reserved_words:
+        t.type = t.value.upper()
+    #print(t)
+    return t
 
 def t_newline(t):
 	r'\n+'

@@ -14,3 +14,4 @@ debut
     fin.
 fin.
 afficher 'Salut je suis hyper fort'.
+afficher k.

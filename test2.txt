@@ -1,4 +1,6 @@
-x vaut 0.
+i vaut 1.
+k vaut 0.
+x vaut 4.
 pour k allant de 1 a 10 par pas de 2.
 debut
     pour i allant de 1 a 10 par pas de 2.

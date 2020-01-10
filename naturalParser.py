@@ -1,6 +1,7 @@
 import ply.yacc as yacc
 
 from lex import tokens
+from lex import extended_reserved_words
 import AST
 
 vars = {}
@@ -20,12 +21,14 @@ def p_statement(p):
     p[0] = p[1]
 
 def p_statement_print(p):
-    ''' statement : AFFICHER expression'''
+    ''' statement : AFFICHER expression 
+        | AFFICHER expressionstring'''
+
     p[0] = AST.PrintNode(p[2])
 
 def p_structure_for(p):
-    ''' structure : POUR iterateur TO loop DEBUT programme FIN'''
-    p[0] = AST.ForNode([p[2],p[4],p[6]])
+    ''' structure : POUR iterateur TO loop '.' DEBUT programme FIN'''
+    p[0] = AST.ForNode([p[2],p[4],p[7]])
 
 def p_iterateur(p):
     ''' iterateur : IDENTIFIER '''
@@ -40,8 +43,8 @@ def p_range(p):
     p[0] = AST.RangeNode([p[1],p[3]])
 
 def p_structure_if(p):
-    ''' structure : SI boolean DEBUT programme SINON programme FIN '''
-    p[0]=AST.IfNode([p[2],p[4],p[6]])
+    ''' structure : SI boolean '.' DEBUT programme SINON programme FIN '''
+    p[0]=AST.IfNode([p[2],p[5],p[7]])
 
 def p_boolean(p):
     ''' boolean : expression COMPARABLE expression '''
@@ -49,9 +52,13 @@ def p_boolean(p):
 
 def p_expression_num_or_var(p):
     '''expression : NUMBER
-        | IDENTIFIER
-        | STRING '''
+        | IDENTIFIER '''
     p[0] = AST.TokenNode(p[1])
+
+def p_expression_string(p):
+    ''' expressionstring : STRING '''
+    p[0] = AST.TokenStringNode(p[1])
+
 
 def p_expression_op(p):
     '''expression : expression ADD_OP expression
@@ -63,9 +70,11 @@ def p_assign(p):
     p[0] = AST.AssignNode([AST.TokenNode(p[1]),p[3]])
 
 def p_error(p):
-    if p:
-        print ("Syntax error in line %d" % p.lineno)
-        yacc.errok()
+    if p is not None:
+        if p.value in extended_reserved_words:
+            print ("%s is a reserved word. Cannot use reserved word as variable name !" % str(p.value))
+        else:
+            print ("Invalid syntax of word %s line %d" % (p.value,p.lineno))
     else:
         print ("Syntax error: unexpected end of file!")
 
@@ -77,7 +86,7 @@ precedence = (
 def parse(program):
     return yacc.parse(program)
 
-yacc.yacc(outputdir='generated')
+s = yacc.yacc(outputdir='generated')
 
 
 if __name__ == "__main__":

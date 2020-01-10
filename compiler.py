@@ -15,6 +15,8 @@ conditions = {
 	'egal a' : '='
 }
 
+variable = dict()
+
 def tabcounter():
 	tabcounter.current += 1
 	return tabcounter.current
@@ -29,25 +31,31 @@ def compile(self):
 
 @addToClass(AST.TokenNode)
 def compile(self):
-	bytecode = ""
-	bytecode += "%s" % self.tok
-	return bytecode
+    bytecode = ""
+    if not (self.tok in variable.keys() or isinstance(self.tok,(int,float))):
+        print("'%s' variable must be instantiate before utilisation" % self.tok)
+    bytecode += "%s" % self.tok
+    return bytecode
 
 @addToClass(AST.AssignNode)
 def compile(self):
     bytecode = ""
     bytecode += "%s = " % self.children[0].tok
     bytecode += "%s \n" % self.children[1].compile()
+    variable[self.children[0].tok] = self.children[1].compile()
     return bytecode
 
 @addToClass(AST.PrintNode)
 def compile(self):
     bytecode = ""
-    #définir le type du token STRING ou IDENTIFIER
-    #if self.children[0].tok == "STRING":
-    bytecode += "print(\'%s\')\n" % self.children[0].compile()
-    #else:
-    #    bytecode += "print(%s)\n" % self.children[0].tok
+    content = self.children[0].compile()
+    bytecode += "print(%s)\n" % content
+    return bytecode
+
+@addToClass(AST.TokenStringNode)
+def compile(self):
+    bytecode = ""
+    bytecode += "'%s'" % self.tok
     return bytecode
 
 @addToClass(AST.OpNode)
