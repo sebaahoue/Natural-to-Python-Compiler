@@ -1,7 +1,13 @@
+'''
+Module contenant le compilateur du langage Natural vers Python.
+Il a pour role de traduire le code source(Natural) en code output(python).
+Pour cela, il parcours l'arbre syntaxique et traduit chacun des noeuds.
+'''
+
 import AST
 from AST import addToClass
 
-
+# définition des équivalents des opérations mathématiques
 operations = {
 	'plus' : '+',
 	'moins' : '-',
@@ -9,6 +15,7 @@ operations = {
 	'divise' : '/'
 }
 
+# définition des équivalents des opérateurs de condition
 conditions = {
 	'superieur a' : '>',
 	'inferieur a' : '<',
@@ -22,6 +29,7 @@ def tabcounter():
 	return tabcounter.current
 tabcounter.current = 0
 
+# compile chacun des noeuds enfants d'un programme
 @addToClass(AST.ProgramNode)
 def compile(self):
 	bytecode = ""
@@ -29,6 +37,7 @@ def compile(self):
 		bytecode += c.compile()
 	return bytecode
 
+# compile les tokens
 @addToClass(AST.TokenNode)
 def compile(self):
     bytecode = ""
@@ -37,6 +46,7 @@ def compile(self):
     bytecode += "%s" % self.tok
     return bytecode
 
+# compile les noeuds d'assignation
 @addToClass(AST.AssignNode)
 def compile(self):
     bytecode = ""
@@ -45,6 +55,7 @@ def compile(self):
     variable[self.children[0].tok] = self.children[1].compile()
     return bytecode
 
+# compile les noeuds d'affichage
 @addToClass(AST.PrintNode)
 def compile(self):
     bytecode = ""
@@ -52,12 +63,14 @@ def compile(self):
     bytecode += "print(%s)\n" % content
     return bytecode
 
+# compile les noeuds de chaines de caracteres
 @addToClass(AST.TokenStringNode)
 def compile(self):
     bytecode = ""
     bytecode += "'%s'" % self.tok
     return bytecode
 
+# compile les noeuds d'opérateurs
 @addToClass(AST.OpNode)
 def compile(self):
     bytecode = ""
@@ -66,6 +79,7 @@ def compile(self):
     bytecode += self.children[1].compile() + "\n"
     return bytecode
 
+# compile les noeuds des boucles for
 @addToClass(AST.ForNode)
 def compile(self):
     counter = tabcounter()
@@ -79,20 +93,21 @@ def compile(self):
 
     return bytecode
 
+# compile les noeuds internes aux boucles
 @addToClass(AST.LoopNode)
 def compile(self):
     bytecode =""
     bytecode += "%s,%s)" % (self.children[0].compile(),self.children[1].compile())
     return bytecode
 
-
+# compile les noeuds de type range
 @addToClass(AST.RangeNode)
 def compile(self):
     bytecode =""
     bytecode += "range(%s,%s" % (self.children[0].compile(),self.children[1].compile())
     return bytecode
 
-
+# compile les noeuds de type if
 @addToClass(AST.IfNode)
 def compile(self):
     counter = tabcounter()
@@ -109,6 +124,7 @@ def compile(self):
     tabcounter.current=0
     return bytecode
 
+# compile les noeuds d'expressions booleenes
 @addToClass(AST.BoolNode)
 def compile(self):
     bytecode =""
