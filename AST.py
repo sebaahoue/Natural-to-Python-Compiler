@@ -102,6 +102,15 @@ class TokenNode(Node):
         
     def __repr__(self):
         return repr(self.tok)
+
+class TokenStringNode(Node):
+    type = 'string'
+    def __init__(self, tok):
+        Node.__init__(self)
+        self.tok = tok
+        
+    def __repr__(self):
+        return repr(self.tok)
     
 class OpNode(Node):
     def __init__(self, op, children):
