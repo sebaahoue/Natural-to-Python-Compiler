@@ -1,3 +1,9 @@
+'''
+Module contenant l'analyseur syntaxique du compilateur.
+Il inclus la définition des différentes règles de grammaire
+et génère un arbre syntaxique avec le code donné en entrée
+'''
+
 import ply.yacc as yacc
 
 from lex import tokens
@@ -6,6 +12,9 @@ import AST
 
 vars = {}
 
+'''
+Définition des différents noeuds de l'arbre syntaxique
+'''
 def p_programme_statement(p):
     ''' programme : statement '.' '''
     p[0] = AST.ProgramNode(p[1])
@@ -13,7 +22,6 @@ def p_programme_statement(p):
 def p_programme_recursive(p):
     ''' programme : statement '.' programme '''
     p[0] = AST.ProgramNode([p[1]]+p[3].children)
-
 
 def p_statement(p):
     ''' statement : assignation
