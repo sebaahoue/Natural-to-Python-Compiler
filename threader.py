@@ -31,10 +31,10 @@ def thread(self, lastNode):
     condition = self.children[0].thread(lastNode)
     condition.addNext(self)
 
-    exitCond = self.children[1].thread(self)
-    exitCond.addNext(self)
-    exitBody = self.children[2].thread(self)
-    exitBody.addNext(self)
+    prog1 = self.children[1].thread(self)
+    prog1.addNext(self)
+    prog2 = self.children[2].thread(self)
+    prog2.addNext(self)
     return self
 
 def thread(tree):
