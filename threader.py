@@ -1,6 +1,12 @@
 import AST
 from AST import addToClass
 
+'''
+Module contenant l'analyseur sémantique du langage Natural.
+Il permet de construire le flux d'exécution du programme (avec couture).
+Avec ce flux, il permet de faire de l'analyse sémantique sur le programme.
+'''
+
 @addToClass(AST.Node)
 def thread(self, lastNode):
     for c in self.children:
