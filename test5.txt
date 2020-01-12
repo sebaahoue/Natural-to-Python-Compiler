@@ -1,8 +1,0 @@
-k vaut 0.
-x vaut 5.
-si k superieur a 2,45.
-debut
-    x vaut 20.
-sinon
-    x vaut 1.
-fin.
