@@ -32,8 +32,10 @@ def thread(self, lastNode):
 
 @addToClass(AST.TokenNode)
 def thread(self, lastNode):
+    # Handling instantiation error (WARNING)
     if not (self.tok in variable.keys() or isinstance(self.tok,(int,float))):
         print("WARNING : variable '%s' must be instantiate before utilization" % self.tok)
+    # Handling scope error (WARNING) for 'for' loop
     if self.tok in variable.keys():
         if not ((variable[self.tok][0] == scopeForId or variable[self.tok][0] == 0) and variable[self.tok][1] <= scopeForDepth):
             print("WARNING : variable '%s' scope isn't reachable !" % self.tok)
@@ -74,6 +76,7 @@ def thread(self, lastNode):
 
     lastNode = expression1.thread(lastNode)
     lastNode = expression2.thread(lastNode)
+    # Handling division by zero (WARINING)
     if self.op == "divise par" and lastNode.type=='token' and lastNode.tok==0:
         print("WARNING : division by zero !")
     lastNode.addNext(self)
