@@ -12,7 +12,7 @@ operations = {
 	'plus' : '+',
 	'moins' : '-',
 	'fois' : '*',
-	'divise' : '/'
+	'divise par' : '/'
 }
 
 # définition des équivalents des opérateurs de condition
@@ -76,7 +76,7 @@ def compile(self):
     bytecode = ""
     bytecode += self.children[0].compile()
     bytecode += " %s " % operations[self.op]
-    bytecode += self.children[1].compile() + "\n"
+    bytecode += self.children[1].compile()
     return bytecode
 
 # compile les noeuds des boucles for

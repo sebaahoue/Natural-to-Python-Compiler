@@ -1,4 +1,5 @@
 k vaut b plus 2.
+k vaut b divise par 0.
 si k superieur a c.
 debut
     si k superieur a 2.
