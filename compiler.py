@@ -41,8 +41,6 @@ def compile(self):
 @addToClass(AST.TokenNode)
 def compile(self):
     bytecode = ""
-    #if not (self.tok in variable.keys() or isinstance(self.tok,(int,float))):
-    #    print("'%s' variable must be instantiate before utilisation" % self.tok)
     bytecode += "%s" % self.tok
     return bytecode
 
@@ -52,7 +50,6 @@ def compile(self):
     bytecode = ""
     bytecode += "%s = " % self.children[0].tok
     bytecode += "%s \n" % self.children[1].compile()
-    #variable[self.children[0].tok] = self.children[1].compile()
     return bytecode
 
 # compile les noeuds d'affichage
@@ -137,7 +134,6 @@ if __name__ == "__main__":
     import sys, os
     prog = open(sys.argv[1]).read()
     ast = parse(prog)
-    #print(ast)
     entry = thread(ast)
     compiled = ast.compile()
     name = os.path.splitext(sys.argv[1])[0]+'.py'    
