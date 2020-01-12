@@ -7,6 +7,8 @@ Il permet de construire le flux d'exécution du programme (avec couture).
 Avec ce flux, il permet de faire de l'analyse sémantique sur le programme.
 '''
 
+variable = []
+
 @addToClass(AST.Node)
 def thread(self, lastNode):
     for c in self.children:
@@ -14,11 +16,27 @@ def thread(self, lastNode):
     lastNode.addNext(self)
     return self
 
+@addToClass(AST.AssignNode)
+def thread(self, lastNode):
+    expression = self.children[1]
+    identifier = self.children[0]
+    variable.append(identifier.tok)
+    lastNode = identifier.thread(lastNode)
+    lastNode = expression.thread(lastNode)
+    lastNode.addNext(self)
+    return self
+
+@addToClass(AST.TokenNode)
+def thread(self, lastNode):
+    if not (self.tok in variable or isinstance(self.tok,(int,float))):
+        print("WARNING : variable '%s' must be instantiate before utilization" % self.tok)
+    lastNode.addNext(self)
+    return self
+
 @addToClass(AST.ForNode)
 def thread(self, lastNode):
     beforeCond = lastNode
     exitIterator = self.children[0].thread(lastNode)
-    #exitIterator.addNext(self)
     exitCond = self.children[1].thread(exitIterator)
     exitCond.addNext(self)
     exitBody = self.children[2].thread(self)
@@ -27,7 +45,6 @@ def thread(self, lastNode):
 
 @addToClass(AST.IfNode)
 def thread(self, lastNode):
-    beforeCond = lastNode
     condition = self.children[0].thread(lastNode)
     condition.addNext(self)
 
@@ -56,4 +73,5 @@ if __name__ == "__main__":
     
     name = os.path.splitext(sys.argv[1])[0]+'-ast-threaded.pdf'
     graph.write_pdf(name) 
+    
     print ("wrote threaded ast to", name)    

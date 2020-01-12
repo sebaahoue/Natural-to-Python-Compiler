@@ -1,11 +1,12 @@
-k vaut b.
-si k superieur a 2.
+k vaut b plus 2.
+si k superieur a c.
 debut
     si k superieur a 2.
     debut
     k vaut 0,5.
     sinon
-    k vaut 1.
+    c vaut 1.
+    k vaut c.
     fin.
 sinon
     k vaut 1.

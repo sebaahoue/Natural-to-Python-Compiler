@@ -22,7 +22,7 @@ conditions = {
 	'egal a' : '='
 }
 
-variable = dict()
+#variable = dict()
 
 def tabcounter():
 	tabcounter.current += 1
@@ -41,8 +41,8 @@ def compile(self):
 @addToClass(AST.TokenNode)
 def compile(self):
     bytecode = ""
-    if not (self.tok in variable.keys() or isinstance(self.tok,(int,float))):
-        print("'%s' variable must be instantiate before utilisation" % self.tok)
+    #if not (self.tok in variable.keys() or isinstance(self.tok,(int,float))):
+    #    print("'%s' variable must be instantiate before utilisation" % self.tok)
     bytecode += "%s" % self.tok
     return bytecode
 
@@ -52,7 +52,7 @@ def compile(self):
     bytecode = ""
     bytecode += "%s = " % self.children[0].tok
     bytecode += "%s \n" % self.children[1].compile()
-    variable[self.children[0].tok] = self.children[1].compile()
+    #variable[self.children[0].tok] = self.children[1].compile()
     return bytecode
 
 # compile les noeuds d'affichage
