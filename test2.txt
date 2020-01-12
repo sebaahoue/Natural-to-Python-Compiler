@@ -1,6 +1,5 @@
 i vaut 1.
 k vaut 0.
-x vaut 4.
 pour k allant de 1 a 10 par pas de 2.
 debut
     w vaut 8.
@@ -8,10 +7,10 @@ debut
     debut
         x vaut k.
     fin.
+    afficher x.
 fin.
-afficher w.
 pour i allant de 1 a 10 par pas de 2.
 debut
-    x vaut k.
+    afficher w.
 fin.
 afficher 'test'.

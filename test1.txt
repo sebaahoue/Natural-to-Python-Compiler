@@ -1,4 +1,5 @@
-x vaut 0.
+k vaut 0.
+x vaut 4.
 pour k allant de 1 a 10 par pas de 2.
 debut
     si k superieur a 2,45.
@@ -10,8 +11,8 @@ debut
         x vaut 1.
         fin.
     sinon
-    x vaut 1.
+    afficher x.
     fin.
 fin.
-afficher 'Salut je suis hyper fort'.
+afficher 'Voila mon beau programme'.
 afficher k.

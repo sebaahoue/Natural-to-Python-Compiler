@@ -1,14 +1,14 @@
 k vaut b plus 2.
 k vaut b divise par 0.
-si k superieur a c.
+si k superieur a 2.
 debut
     si k superieur a 2.
     debut
-    k vaut 0,5.
+        k vaut 0,5.
     sinon
-    c vaut 1.
-    k vaut c.
+        c vaut 1.
+        k vaut c.
     fin.
 sinon
-    k vaut 1.
+    afficher k.
 fin.
