@@ -11,6 +11,7 @@ variable = dict()
 scopeForId = 0
 scopeForDepth = 0 
 
+
 @addToClass(AST.Node)
 def thread(self, lastNode):
     for c in self.children:
@@ -24,7 +25,6 @@ def thread(self, lastNode):
     identifier = self.children[0]
     if identifier.tok not in variable.keys():
         variable[identifier.tok] = (scopeForId,scopeForDepth)
-    print(variable)
     lastNode = identifier.thread(lastNode)
     lastNode = expression.thread(lastNode)
     lastNode.addNext(self)
@@ -60,7 +60,6 @@ def thread(self, lastNode):
 def thread(self, lastNode):
     condition = self.children[0].thread(lastNode)
     condition.addNext(self)
-
     prog1 = self.children[1].thread(self)
     prog1.addNext(self)
     prog2 = self.children[2].thread(self)

@@ -133,10 +133,12 @@ def compile(self):
 
 if __name__ == "__main__":
     from naturalParser import parse
+    from threader import thread
     import sys, os
     prog = open(sys.argv[1]).read()
     ast = parse(prog)
-    print(ast)
+    #print(ast)
+    entry = thread(ast)
     compiled = ast.compile()
     name = os.path.splitext(sys.argv[1])[0]+'.py'    
     outfile = open(name, 'w')
